@@ -1,0 +1,61 @@
+paths:
+  /temp/test:
+    get:
+      tags:
+        - Temp
+      description: 테스트
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: BadRequest
+
+  /temp/exception/{flag}:
+    get:
+      tags:
+        - Temp
+      description: 테스트
+      parameters:
+        - name: flag
+          in: header
+          description: test flag
+          requitred: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        200:
+          description: 성공
+        400:
+          description: 실패
+
+  /temp/test/db:
+    get:
+      tags:
+        - Temp
+      description: db test
+      responses:
+        200:
+          description: 성공
+        400:
+          description: 실패
+
+  /temp/hello:
+    post:
+      tags:
+        - Temp
+      description: 로그인
+      parameters:
+        - name: flag
+          in: path
+          description: test flag
+          requitred: true
+          schema:
+            type: integer
+            format: int64
+
+      responses:
+        200:
+          description: Successful operation
+        400:
+          description: BadRequest
