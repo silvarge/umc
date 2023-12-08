@@ -28,7 +28,7 @@ jobs:
 
     # Install project dependencies, test and build
     - name: Install dependencies
-      run: npm ci   # dependencies 설치
+      run: npm install   # dependencies 설치
 
     - name: Run Build
       run: npm run build # 빌드
