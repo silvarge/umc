@@ -43,9 +43,9 @@ jobs:
     - name: Configure AWS credentials
       uses: aws-actions/configure-aws-credentials@v1
       with:
-        aws-access-key-id: ${{ secrets.AWS_EB_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_EB_SECRET_ACCESS_KEY }}
-        aws-region: ${{ secrets.AWS_REGION }}
+        aws-access-key-id: ${{ secrets.AWS_ACTION_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_ACTION_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
 
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*' './aws/*' './node_modules/*' awscliv2.zip
@@ -65,14 +65,14 @@ jobs:
     - name: Beanstalk Deploy
       uses: einaregilsson/beanstalk-deploy@v20
       with:
-        aws_access_key: ${{secrets.AWS_ACCESS_KEY}}
-        aws_secret_key: ${{secrets.AWS_SECRET_KEY}}
+        aws_access_key: ${{secrets.AWS_ACTION_ACCESS_KEY_ID}}
+        aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
         application_name: umc-dev
         environment_name: Umc-dev-env
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
         region: ap-northeast-2
         deployment_package: deploy.zip
-        wait_for_environment_recovery: 60
+        wait_for_environment_recovery: false
 
     - name: Deployed!
       run: echo App deployed to ELB
