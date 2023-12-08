@@ -53,8 +53,8 @@ jobs:
       with:
         aws_access_key: ${{secrets.AWS_ACTION_ACCESS_KEY_ID}}
         aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
-        application_name: project-dev
-        environment_name: Project-dev-env
+        application_name: test-dev
+        environment_name: Test-dev-env
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
         use_existing_version_if_available: true
         region: ap-northeast-2
