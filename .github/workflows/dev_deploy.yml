@@ -2,14 +2,16 @@ name: Node.js Dev CI/CD
 
 on:
   pull_request:      # pull request -> merge 가 되었을 때 돌아라
-    types: [closed]
+    # types:
+    #   - closed
+    branches: [ "dev" ]
   workflow_dispatch: # 수동 실행도 가능하도록 함
 
 jobs:
   build:
-    name: CI Pipeline
-    runs-on: ubuntu-latest
     if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    
+    runs-on: ubuntu-latest
 
     strategy:
       matrix:
