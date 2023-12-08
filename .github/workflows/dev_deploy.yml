@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    # if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    # if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'dev'
     
     runs-on: ubuntu-latest
 
@@ -16,25 +16,63 @@ jobs:
         node-version: ['18.x']
         
     steps:
-    - name: Test
-      run: |
-        echo ${{ github.head_ref }}
-        echo ${{ github.base_ref }}
-
     - name: Checkout
       uses: actions/checkout@v3   # build 할 코드를 가져옴 (코드 check out)
 
+    # Initialize Node.js
     - name: Set up Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
 
-    - name: Install node_modules
+    # Install project dependencies, test and build
+    - name: Install dependencies
       run: npm ci   # dependencies 설치
+    - name: Run Build
+      run: npm run build # 빌드
 
-    - run: npm run build --if-present # 빌드
+    # Install AWS CLI 2
+    - name: Install AWS CLI 2
+      run: |
+        curl "https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip" -o "awscliv2.zip"
+        unzip awscliv2.zip
+        which aws
+        sudo ./aws/install --bin-dir /usr/local/bin --install-dir /usr/local/aws-cli --update
+    # Configure AWS credentials
+    - name: Configure AWS credentials
+      uses: aws-actions/configure-aws-credentials@v1
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACTION_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_ACTION_SECRET_ACCESS_KEY }}
+        aws-region: ap-northeast-2
 
-    - run: npm start
+    - name: Generate deployment package
+      run: zip -r deploy.zip . -x '*.git*' './aws/*' './node_modules/*' awscliv2.zip
 
-    # deploy:
+    # Get Current Time
+    - name: Get Current time
+      uses: josStorer/get-current-time@v2
+      id: current-time
+      with:
+        format: YYYYMMDD-HH-mm-ss
+        utcOffset: '+09:00'
+
+    - name: Show Current Time
+      run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
+      shell: bash # 시간 보여주기
+    
+    - name: Beanstalk Deploy
+      uses: einaregilsson/beanstalk-deploy@v20
+      with:
+        aws_access_key: ${{secrets.AWS_ACTION_ACCESS_KEY_ID}}
+        aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
+        application_name: umc-dev
+        environment_name: Umc-dev-env
+        version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+        region: ap-northeast-2
+        deployment_package: deploy.zip
+        wait_for_environment_recovery: false
+
+    - name: Deployed!
+      run: echo App deployed to ELB
