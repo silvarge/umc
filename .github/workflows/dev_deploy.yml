@@ -1,0 +1,33 @@
+name: Node.js Dev CI/CD
+
+on:
+  pull_request:      # pull request -> merge 가 되었을 때 돌아라
+    type: [ closed ]
+  workflow_despatch: # 수동 실행도 가능하도록 함
+
+jobs:
+  build:
+    name: CI Pipeline
+    runs-on: ubuntu-latest
+    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+
+    strategy:
+      matrix:
+        node-version: ['18.x']
+        
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3   # build 할 코드를 가져옴 (코드 check out)
+
+    - name: Set up Node.js ${{ matrix.node-version }}
+      uses: actions/setup-node@v3
+      with:
+        node-version: ${{ matrix.node-version }}
+        cache: 'npm'
+
+    - name: Install node_modules
+      run: npm ci   # install dependencies
+
+    - run: npm run build --if-present
+    
+    deploy:
