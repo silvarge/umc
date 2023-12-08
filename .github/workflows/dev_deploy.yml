@@ -2,8 +2,8 @@ name: Node.js Dev CI/CD
 
 on:
   pull_request:      # pull request -> merge 가 되었을 때 돌아라
-    type: [ closed ]
-  workflow_despatch: # 수동 실행도 가능하도록 함
+    types: [closed]
+  workflow_dispatch: # 수동 실행도 가능하도록 함
 
 jobs:
   build:
