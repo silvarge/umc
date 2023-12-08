@@ -34,7 +34,7 @@ jobs:
       run: npm run build # 빌드
 
     - name: Generate deployment package
-      run: zip -r deploy.zip . -x '*.git*' './aws/*' './node_modules/*' './dist/*' awscliv2.zip
+      run: zip -r deploy.zip . -x '*.git*' './src/*' './aws/*'
 
     # Get Current Time
     - name: Get current time
@@ -56,9 +56,9 @@ jobs:
         application_name: project-dev
         environment_name: Project-dev-env
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+        use_existing_version_if_available: true
         region: ap-northeast-2
         deployment_package: deploy.zip
-        wait_for_environment_recovery: false
 
     - name: Deployed!
       run: echo App deployed to ELB
