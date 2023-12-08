@@ -2,14 +2,12 @@ name: Node.js Dev CI/CD
 
 on:
   pull_request:      # pull request -> merge 가 되었을 때 돌아라
-    # types:
-    #   - closed
-    branches: [ "dev" ]
+    types: [ closed ]
   workflow_dispatch: # 수동 실행도 가능하도록 함
 
 jobs:
   build:
-    if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
+    # if: github.event.pull_request.merged == true && github.event.pull_request.base.ref == 'main'
     
     runs-on: ubuntu-latest
 
@@ -18,6 +16,11 @@ jobs:
         node-version: ['18.x']
         
     steps:
+    - name: Test
+      run: |
+        echo ${{ github.head_ref }}
+        echo ${{ github.base_ref }}
+
     - name: Checkout
       uses: actions/checkout@v3   # build 할 코드를 가져옴 (코드 check out)
 
