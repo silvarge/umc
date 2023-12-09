@@ -61,7 +61,7 @@ jobs:
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
         use_existing_version_if_available: true
         region: ap-northeast-2
-        deployment_package: test-deploy.zip
+        deployment_package: deploy.zip
 
     - name: Deployed!
       run: echo App deployed to ELB
