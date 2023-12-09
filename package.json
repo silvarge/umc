@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "start:dev": "nodemon --exec babel-node index.js",
     "start": "node index.js",
-    "build": "babel index.js -d dist"
+    "build": "babel index.js -d deploy"
   },
   "author": "",
   "license": "ISC",
