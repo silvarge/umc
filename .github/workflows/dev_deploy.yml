@@ -33,11 +33,8 @@ jobs:
     - name: Run Build
       run: npm run build # 빌드
 
-    # - name: Generate deployment package
-    #   run: zip -r deploy.zip . -x '*.git*' './node_modules/*' '*lock*'
-
-    # - name: Get Zip File
-    #   run: echo zipinfo -1 deploy.zip
+    - name: Generate deployment package
+      run: zip -r deploy.zip ./dist/app.js . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
 
     # Get Current Time
     - name: Get current time
@@ -51,17 +48,17 @@ jobs:
       run: echo "CurrentTime=${{steps.current-time.outputs.formattedTime}}"
       shell: bash # (10) 시간 보여주기
     
-    - name: Beanstalk Deploy
-      uses: einaregilsson/beanstalk-deploy@v21
-      with:
-        aws_access_key: ${{secrets.AWS_ACTION_ACCESS_KEY_ID}}
-        aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
-        application_name: test-dev
-        environment_name: Test-dev-env
-        version_label: github-action-${{steps.current-time.outputs.formattedTime}}
-        use_existing_version_if_available: true
-        region: ap-northeast-2
-        deployment_package: deploy.zip
+    # - name: Beanstalk Deploy
+    #   uses: einaregilsson/beanstalk-deploy@v21
+    #   with:
+    #     aws_access_key: ${{secrets.AWS_ACTION_ACCESS_KEY_ID}}
+    #     aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
+    #     application_name: test-dev
+    #     environment_name: Test-dev-env
+    #     version_label: github-action-${{steps.current-time.outputs.formattedTime}}
+    #     use_existing_version_if_available: true
+    #     region: ap-northeast-2
+    #     deployment_package: deploy.zip
 
     - name: Deployed!
       run: echo App deployed to ELB
