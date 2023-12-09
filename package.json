@@ -5,9 +5,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon --exec babel-node index.js",
-    "start": "babel-node index.js",
-    "build": "babel index.js -d dist"
+    "start:dev": "nodemon --exec babel-node app.js",
+    "start": "babel-node app.js",
+    "build": "babel app.js -d dist"
   },
   "author": "",
   "license": "ISC",
