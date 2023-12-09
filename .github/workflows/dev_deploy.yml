@@ -34,7 +34,7 @@ jobs:
       run: npm run build:elb # 빌드
 
     - name: Generate deployment package
-      run: | 
+      run: zip -r deploy.zip . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
         # cp -R .ebextensions-dev .platform config public src deploy
         # cp babel.config.json package.json Procfile deploy
         # cd deploy &* zip -r deploy.zip
