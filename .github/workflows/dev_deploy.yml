@@ -33,11 +33,11 @@ jobs:
     - name: Run Build
       run: npm run build # 빌드
 
-    - name: Generate deployment package
-      run: zip -r deploy.zip . -x '*.git*' './node_modules/*' 'package-lock.*'
+    # - name: Generate deployment package
+    #   run: zip -r deploy.zip . -x '*.git*' './node_modules/*' '*lock*'
 
-    - name: Get Zip File
-      run: echo zipinfo -1 deploy.zip
+    # - name: Get Zip File
+    #   run: echo zipinfo -1 deploy.zip
 
     # Get Current Time
     - name: Get current time
@@ -61,7 +61,7 @@ jobs:
         version_label: github-action-${{steps.current-time.outputs.formattedTime}}
         use_existing_version_if_available: true
         region: ap-northeast-2
-        deployment_package: deploy.zip
+        deployment_package: test-deploy.zip
 
     - name: Deployed!
       run: echo App deployed to ELB
