@@ -36,8 +36,10 @@ jobs:
     - name: Generate deployment package
       run: | 
         cp -R .ebextensions-dev .platform config public src deploy
-        cp -R babel.config.json package.json Procfile deploy
+        cp babel.config.json package.json Procfile deploy
         cd deploy &* zip -r deploy.zip
+
+        # zip -r deploy.zip ./dist/app.js . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
 
     - name: Get Zip Inside
       run: zipinfo -1 deploy.zip
