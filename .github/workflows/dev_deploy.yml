@@ -34,7 +34,13 @@ jobs:
       run: npm run build # 빌드
 
     - name: Generate deployment package
-      run: zip -r deploy.zip ./dist/app.js . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
+      run: | 
+        cp -R .ebextensions-dev .platform config public src swagger deploy
+        cp -R babel.config.json package.json Procfile deploy
+        cd deploy &* zip -r deploy.zip
+
+    - name: Get Zip Inside
+      run: zipinfo -1 deploy.zip
 
     # Get Current Time
     - name: Get current time
