@@ -36,6 +36,9 @@ jobs:
     - name: Generate deployment package
       run: zip -r deploy.zip . -x '*.git*'
 
+    - name: Get Zip File
+      run: echo zipinfo -1 deploy.zip
+
     # Get Current Time
     - name: Get current time
       uses: 1466587594/get-current-time@v2
