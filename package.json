@@ -28,6 +28,7 @@
     "@babel/node": "^7.22.15",
     "@babel/preset-env": "^7.22.15",
     "nodemon": "^3.0.1",
+    "swagger-autogen": "^2.23.7",
     "swagger-cli": "^4.0.4",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"

@@ -35,7 +35,7 @@ jobs:
 
     - name: Generate deployment package
       run: | 
-        cp -R .ebextensions-dev .platform config public src swagger deploy
+        cp -R .ebextensions-dev .platform config public src deploy
         cp -R babel.config.json package.json Procfile deploy
         cd deploy &* zip -r deploy.zip
 
