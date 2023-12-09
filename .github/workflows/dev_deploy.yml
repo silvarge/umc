@@ -34,7 +34,7 @@ jobs:
       run: npm run build # 빌드
 
     - name: Generate deployment package
-      run: zip -r deploy.zip . -x '*.git*' './node_modules/*'
+      run: zip -r deploy.zip . -x '*.git*' './node_modules/*' 'package-lock.*'
 
     - name: Get Zip File
       run: echo zipinfo -1 deploy.zip
