@@ -41,10 +41,10 @@ jobs:
         run: |
           # cp -R .ebextensions-dev .platform dist
           # cp package.json Procfile dist
-          # cd dist &* zip -r deploy.zip
+          # cd dist && zip -r deploy.zip
           
       - name: Get Zip Inside
-        run: zipinfo -1 dist/deploy.zip
+        run: zipinfo -1 ./dist/deploy.zip .
 
       # Get Current Time
       - name: Get current time
@@ -68,7 +68,7 @@ jobs:
           version_label: github-action-2023-12-10T02-30-58
           use_existing_version_if_available: true
           region: ap-northeast-2
-          deployment_package: deploy.zip
+          deployment_package: dist/deploy.zip
           wait_for_deployment: false
 
       - name: Deployed!
