@@ -40,8 +40,10 @@ jobs:
       - name: Generate deployment package
         run: |
           cp -R .ebextensions-dev .platform dist
-          cp package.json Procfile dist
-          cd dist && zip -r deploy.zip
+          cp package.json dist/package.json
+          cp Procfile dist/Procfile
+          cd dist
+          zip -r deploy.zip
           
       - name: Get Zip Inside
         run: zipinfo -1 dist/deploy.zip .
