@@ -41,10 +41,10 @@ jobs:
         run: |
           # cp -R .ebextensions-dev .platform dist
           # cp package.json Procfile dist
-          # cd deploy &* zip -r deploy.zip
+          # cd dist &* zip -r deploy.zip
           
       - name: Get Zip Inside
-        run: zipinfo -1 deploy.zip
+        run: zipinfo -1 dist/deploy.zip
 
       # Get Current Time
       - name: Get current time
