@@ -35,18 +35,14 @@ jobs:
         run: npm install   # dependencies 설치
 
       - name: Run Build
-        run: |
-          npm run build:elb # 빌드
-          npm run build:cfg
+        run: npm run build # 빌드
 
       - name: Generate deployment package
-        run: zip -r deploy.zip . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
-          # cp -R .ebextensions-dev .platform config public src deploy
-          # cp babel.config.json package.json Procfile deploy
+        run: |
+          # cp -R .ebextensions-dev .platform dist
+          # cp package.json Procfile dist
           # cd deploy &* zip -r deploy.zip
           
-          # zip -r deploy.zip . -x '*.git*' './node_modules/*' '*lock*' './dist/*'
-
       - name: Get Zip Inside
         run: zipinfo -1 deploy.zip
 
