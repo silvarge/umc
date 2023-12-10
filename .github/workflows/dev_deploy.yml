@@ -73,7 +73,7 @@ jobs:
           use_existing_version_if_available: true
           region: ap-northeast-2
           deployment_package: deploy.zip
-          wait_for_environment_recovery: 180 
+          wait_for_deployment: false
 
       - name: Deployed!
         run: echo App deployed to ELB
