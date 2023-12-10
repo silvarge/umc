@@ -32,15 +32,16 @@ jobs:
           node-version: ${{ matrix.node-version }}
       # Install project dependencies, test and build
       - name: Install dependencies
-        run: npm install   # dependencies 설치
+        run: npm ci   # dependencies 설치
 
       - name: Run Build
         run: npm run build # 빌드
 
       - name: Generate deployment package
         run: |
-          cp -R .ebextensions-dev .platform dist
+          cp -R .platform dist
           cp package.json dist/package.json
+          cp package-lock.json dist/package-lock.json
           cp Procfile dist/Procfile
           cd dist
           zip -r deploy.zip .
@@ -67,7 +68,7 @@ jobs:
           aws_secret_key: ${{secrets.AWS_ACTION_SECRET_ACCESS_KEY}}
           application_name: test8-dev
           environment_name: Test8-dev-env
-          version_label: github-action-2023-12-10T02-30-58
+          version_label: github-action-${{ steps.current-time.outputs.formattedTime }}
           use_existing_version_if_available: true
           region: ap-northeast-2
           deployment_package: dist/deploy.zip
