@@ -2,14 +2,16 @@
   "name": "umc_cicd",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "app.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start:dev": "nodemon --exec babel-node index.js",
-    "start": "node index.js",
-    "build": "babel index.js -d dist",
-    "build:elb": "babel index.js -d ./"
+    "start:dev": "nodemon --exec babel-node app.js",
+    "start": "node app.js",
+    "build": "babel app.js -d dist",
+    "build:elb": "babel app.js -d ./",
+    "build:cfg": "babel ./config/db.connect.js ./config/swagger.config.js -d ./config/"
   },
+  "type":"module",
   "author": "",
   "license": "ISC",
   "dependencies": {
