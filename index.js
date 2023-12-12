@@ -1,11 +1,11 @@
 import express from 'express';
-// import { specs } from './config/swagger.config.js';
-// import SwaggerUi from 'swagger-ui-express';
+import { specs } from './config/swagger.config.js';
+import SwaggerUi from 'swagger-ui-express';
 import dotenv from 'dotenv';
 import cors from 'cors';
 
 import { response } from './config/response.js';
-// import { BaseError } from './config/error.js';
+import { BaseError } from './config/error.js';
 import { status } from './config/response.status.js';
 import { healthRoute } from './src/routes/health.route.js';
 
@@ -20,15 +20,13 @@ app.use(express.static('public'));          // 정적 파일 접근
 app.use(express.json());                    // request의 본문을 json으로 해석할 수 있도록 함 (JSON 형태의 요청 body를 파싱하기 위함)
 app.use(express.urlencoded({extended: false})); // 단순 객체 문자열 형태로 본문 데이터 해석
 
+app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(specs));
+
 app.use('/health', healthRoute);
 
 app.get('/', (req, res, next) => {
     res.send(response(status.SUCCESS, "루트 페이지!"));
 })
-
-// app.get('/health', (req, res, next) => {
-//     res.send("I'm healthy!!");
-// })
 
 // error handling
 app.use((req, res, next) => {

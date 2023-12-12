@@ -1,0 +1,24 @@
+paths:
+  /:
+    get:
+      tags:
+        - Test
+      summary: Root
+      responses:
+        '200':
+          description: 성공으로 상태 변화 성공!
+          schema:
+            type: object
+            properties:
+              isSuccess:
+                type: boolean
+                example: true
+              code:
+                type: integer
+                example: 2000
+              message:
+                type: string
+                example: "success!"
+              data:
+                type: string
+                example: "루트 페이지!"
