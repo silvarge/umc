@@ -33,4 +33,7 @@ export const status = {
 
     // paging err
 
+    // S3 err
+    WRONG_EXTENSION: {status: StatusCodes.BAD_REQUEST, "isSuccess": false, "code": "S34001", "message": "잘못된 확장자입니다."}
+
 };
